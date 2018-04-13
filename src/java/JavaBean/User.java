@@ -1,10 +1,16 @@
 package JavaBean;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class User implements Serializable {
 
     // Create properties
+    @Id
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String phone;
@@ -13,8 +19,6 @@ public class User implements Serializable {
     private String state;
     private String zipCode;
     private String email;
-    private String username;
-    private String password;
 
     // Create a no-argument constructor
     public User() {

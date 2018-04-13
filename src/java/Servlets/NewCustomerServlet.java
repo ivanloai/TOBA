@@ -1,5 +1,8 @@
 package Servlets;
 
+import Database.AccountDB;
+import Database.UserDB;
+import JavaBean.Account;
 import JavaBean.User;
 import java.io.*;
 import javax.servlet.*;
@@ -46,6 +49,17 @@ public class NewCustomerServlet extends HttpServlet {
                 
                 // Create a javaBean to store the user's information
                 User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, password);
+                
+                // Create a Saving account with an initial balance of $25.00
+                Account savingAccount = new Account(user, 25.00, Account.Type.SAVING);
+                
+                // Create a Checking account with an initial balance of $0.00
+                Account checkingAccount = new Account(user, 0, Account.Type.CHECKING);
+                
+                // Insert into the database
+                UserDB.insert(user);
+                AccountDB.insert(savingAccount);
+                AccountDB.insert(checkingAccount);
                 
                 // Add the new create user object to the session scope
                 HttpSession session = request.getSession();

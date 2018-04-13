@@ -1,5 +1,6 @@
 package Servlets;
 
+import Database.UserDB;
 import JavaBean.User;
 import java.io.*;
 import javax.servlet.*;
@@ -41,6 +42,9 @@ public class ResetPasswordServlet extends HttpServlet {
                 message = "";
                 user.setPassword(newPassword);
 
+                // Update the user
+                UserDB.update(user);
+                
                 // Redirect to the account activity page
                 url = "/account_activity.jsp";
                 session.setAttribute("user", user);

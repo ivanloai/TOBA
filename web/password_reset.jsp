@@ -25,7 +25,7 @@
             </tr>
         </table>
     </form>
-            <p><i>${message}</i></p>
+    <p><i>${message}</i></p>
 </session>
 
 <c:import url="includes/footer.jsp" />
