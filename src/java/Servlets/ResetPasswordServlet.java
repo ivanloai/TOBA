@@ -47,7 +47,6 @@ public class ResetPasswordServlet extends HttpServlet {
                 
                 // Redirect to the account activity page
                 url = "/account_activity.jsp";
-                session.setAttribute("user", user);
             } else {
                 // Display a message and redirect back to the reset password page
                 message = "*The passwords did not match, please try again.";
