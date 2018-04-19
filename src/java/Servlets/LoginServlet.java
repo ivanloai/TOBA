@@ -24,27 +24,28 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
+            // Create the jsmith user if not exists
+            if (!UserDB.emailExists("jsmith@toba.com")) {
+                // Create an user
+                User jSmith = new User("J", "Smith", "7277777777", "11 Drew St", "Clearwater", "FL", "33761", "jsmith@toba.com", "jsmith@toba.com", "letmein");
+                // Create an account 
+                Account savingAccount = new Account(jSmith, 25.00, Account.Type.SAVING);
+                Account checkingAccount = new Account(jSmith, 0, Account.Type.CHECKING);
+
+                // Insert into the database
+                UserDB.insert(jSmith);
+                AccountDB.insert(savingAccount);
+                AccountDB.insert(checkingAccount);
+            }
+            
             // Check if it can login
             User user = UserDB.login(username, password);
             if (user != null) {
                 url = "/account_activity.jsp";
-            } else if (username.equals("jsmith@toba.com") && password.equals("letmein")) {
-                // Create an user
-                user = new User("J", "Smith", "7277777777", "11 Drew St", "Clearwater", "FL", "33761", "jsmith@toba.com", username, password);
-                // Create an account 
-                Account savingAccount = new Account(user, 25.00, Account.Type.SAVING);
-                Account checkingAccount = new Account(user, 0, Account.Type.CHECKING);
-                
-                // Insert into the database
-                UserDB.insert(user);
-                AccountDB.insert(savingAccount);
-                AccountDB.insert(checkingAccount);
-                
-                url = "/account_activity.jsp";
             } else {
                 url = "/login_failure.jsp";
             }
-            
+
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
         }
