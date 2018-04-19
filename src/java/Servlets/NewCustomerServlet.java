@@ -1,10 +1,12 @@
 package Servlets;
 
 import Database.AccountDB;
+import Database.PasswordUtil;
 import Database.UserDB;
 import JavaBean.Account;
 import JavaBean.User;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -36,6 +38,14 @@ public class NewCustomerServlet extends HttpServlet {
 
             // Create a temporary password "welcome1"
             String password = "welcome1";
+            
+            // Hash and salt password
+            try {
+                password = PasswordUtil.hashAndSaltPassword(password);
+            } catch (NoSuchAlgorithmException e){
+                e.getMessage();
+            }
+            
 
             // Check if it's empty or not
             String message;

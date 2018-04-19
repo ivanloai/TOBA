@@ -1,6 +1,8 @@
 package Database;
 
+import JavaBean.Transactions;
 import JavaBean.User;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -99,5 +101,20 @@ public class UserDB {
         } finally {
             em.close();
         }
+    }
+        public static List<User> userList() {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        String qString = "SELECT u FROM User u";
+        TypedQuery<User> q = em.createQuery(qString, User.class);
+        List<User> user;
+        try {
+            user = q.getResultList();
+            if (user == null || user.isEmpty()) {
+                user = null;
+            }
+        } finally {
+            em.close();
+        }
+        return user;
     }
 }
